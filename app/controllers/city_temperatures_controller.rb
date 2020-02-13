@@ -5,6 +5,15 @@ class CityTemperaturesController < ApplicationController
   def index
     @city_temperatures = CityTemperature.all
 
+    order     = params["order_by"]
+    direction = (params["direction"] || :asc).to_sym
+
+    if order.present? && order == "temperature"
+      @city_temperatures = @city_temperatures.order_by_temperature(direction)
+    elsif order.present? && order == "created_at"
+      @city_temperatures = @city_temperatures.order_by_created_at(direction)
+    end
+
     render json: @city_temperatures
   end
 
