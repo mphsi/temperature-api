@@ -38,6 +38,11 @@ class CityTemperaturesController < ApplicationController
     @city_temperature.destroy
   end
 
+  # GET /city_temperatures/lowest
+  def lowest
+    render json: CityTemperature.order(:temperature).first
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_city_temperature
